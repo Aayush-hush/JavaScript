@@ -79,12 +79,12 @@ function SecondMessage(){
 function ThirdMessage(){
     alert("asnjjlnd");
 }
-document.getElementById("h").onclick=function(){
+/*document.getElementById("h").onclick=function(){
     clearTimeout(T1);
     clearTimeout(T2);
     alert(`Do It`);
 }
-
+*/
 
 
 
@@ -106,10 +106,100 @@ function countup(){
 
 //DAte Object 
 
-let date =  new Date();
-date = date.toLocaleString();
+
 //.getfullyear .getDate .getDay .getMonth .getHours .getMinutes .getseconds
 
-document.getElementById("h").onclick=function(){
+/*document.getElementById("h").onclick=function(){
     document.getElementById("k").innerHTML=date;
 }
+*/
+const clock = document.getElementById("CLOCK");
+
+update();
+document.getElementById("StartButton").onclick = function(){
+    setInterval(update , 1000);
+}
+
+function update(){
+    let date = new Date();
+    
+    
+    clock.innerHTML = formatTime(date);
+
+    function formatTime(date){
+        let hours = date.getHours();
+        let minutes = date.getMinutes();
+        let seconds = date.getSeconds();
+        let amOrpm = hours>=12 ? "pm" : "am" ;
+
+        hours  = formatZeroes(hours);
+        minutes  = formatZeroes(minutes);
+        seconds  = formatZeroes(seconds);
+
+        hours = (hours%12) || 12;
+
+        return `${hours}:${minutes}:${seconds} ${amOrpm}`
+    }
+
+    function formatZeroes(ll){
+        ll = ll.toString();
+        return ll.length < 2 ? "0"+ll : ll ;
+    }
+}
+
+/*
+Synchronous code = In an ordered sequence . 
+                   Step by Step linear Instruction (SStart now - Finish now )
+Asynchronous code = Out of sequence (Start now - finish sometime later)
+
+console.time() ~> Starts an timer so that you can track how long an
+                  operation takes  Give each timer a unique name.
+                  console.timeEnd("Response time"); 
+                  **ony calculates synchronous operation only 
+
+promise ~> object that encapsulates the result of an asynchronous operation
+           let asynchronous method return values like synchronous methods
+           "I promise to return something in future "
+
+           the STATE is 'pending' then : 'fulfilled' or 'rejected'
+           the RESULT is what can be returned 
+           2 parts producing & consuming 
+
+async ~> makes a function return a promise 
+await ~> make a async function ait for a promise 
+
+*/
+
+async function loadFile(){
+
+    let fileloaded = true ;
+
+    if(fileloaded){
+        return ("File Loaded");
+    }
+    else{
+        return ("File NOT Loaded")
+    }
+}
+
+async function StartProcess(){
+    try{
+        let message = await loadFile();
+        console.log(message);
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
+/* ES6 Modules ~>   Think of them as a seperate chapter of a Book ~~~
+                    The idea behind a module is that it's a file of reusable code 
+                    We can import pre written codes to use whenever we want 
+                    Great for any general utility values and function 
+                    Helps the code be more usable and maintable 
+*/
+
+// import{variable , functions} from `./index.js`  ~> Then u can use any thing from that file as if it was written in the same file 
+// JUst remember to add export Keyword to things u want to export 
+
+
